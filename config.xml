@@ -19,10 +19,6 @@
 
 	<feature name="http://api.phonegap.com/1.0/network"/>
 
-	<preference name="Fullscreen" value="True" />
-  <preference name="KeepRunning" value="False" />
-  <preference name="ShowTitle" value="True" />
-  <preference name="InAppBrowserStorageEnabled" value="False" />
-  <preference name="SuppressesIncrementalRendering" value="True" />
-  <vs:plugin name="com.evothings.ble" version="0.0.1" />
+	<preference name="orientation" value="portrait" />
+	<vs:plugin name="com.evothings.ble" version="0.0.1" />
 </widget>

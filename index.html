@@ -2,75 +2,101 @@
 <html>
 
 <head>
-
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, user-scalable=no
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no
 		initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+  
+  <title>Index page</title>
+  
+  <script type="text/javascript" src="assets/jquery-1.9.1.js"></script>
+  <script type="text/javascript" src="assets/waypoints.min.js"></script>
+  <script type="text/javascript" src="assets/jquery.timeago.js"></script>
+  <script src="assets/target-script-min.js"></script>
+  <script src="assets/jquery.mobile-1.3.1.min.js"></script>    
 
-	<title>BLE Scan</title>
+  <link rel="stylesheet" type="text/css" href="assets/normalize.css">
+  <link rel="stylesheet" type="text/css" href="assets/result-light.css">
+  <link rel="stylesheet" type="text/css" href="assets/jquery-mobile-fluid960.css">
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css">
 
-	<style>
-		@import 'ui/css/evothings-app.css';
-	</style>
 
-	<script>
-	// Redirect console.log to Evothings Workbench.
-	if (window.hyper && window.hyper.log) { console.log = hyper.log }
-	</script>
+  
+  <script type="text/javascript">
+  $('#exit').bind('click', function() {
+   navigator.app.exitApp();
+  });
+  </script>
 
-	<script src="phonegap.js"></script>
-	<script src="libs/jquery/jquery.js"></script>
-	<script src="libs/evothings/evothings.js"></script>
-	<script src="app.js"></script>
+<style>
+#canvas
+{
+    
+	border:1px solid grey;
+}
+</style>
+
 
 </head>
+<body ontouchstart="">
+              
+    <!-- Start of first page -->
+       <div data-role="page" id="index">
+            <div data-theme="c" data-role="header" data-position="fixed">
+				<a href="#"  data-role="button" id="exit" data-icon="delete" data-iconpos="notext">exit</a>
+				<h1>Home</h1>
+				<a href="#mypanel" ata-role="button" data-icon="info" data-iconpos="notext" >about</a> 	
+            </div>
+            <div data-role="panel" id="mypanel" data-position="right" data-display="push">
+			<h1>About!</h1>
+			</div><!-- /panel -->
+            <div data-role="content" >
+			<canvas id="canvas" width="290" height="150"></canvas>
+            </div>
+            
+            <div data-theme="c" data-role="footer" data-position="fixed">
+                <div data-role="navbar">
+                    <ul>
+    				   <li><a href="#index" data-icon="home" class="ui-btn-active ui-state-persist" >Home</a></li>
+					   <li><a href="#setting" data-icon="gear" data-transition="slide" >Setting</a></li>
+                    </ul>
+                </div><!-- /navbar -->
+            </div>            
+        </div>    
+    
+	<!-- Start of second page -->
+	    <div data-role="page" id="setting">
 
-<body ontouchstart=""><!-- ontouchstart="" enables low-delay CSS transitions. -->
+	         <div data-theme="c" data-role="header" data-position="fixed">
+					<h1>Setting</h1>
+             </div><!-- /header -->
+	         <div data-role="content">	
+				<div data-role="collapsible-set" data-content-theme="a" data-iconpos="right" id="set">
+    			<div data-role="collapsible"  >
+        			<h3>Bluetooth</h3>
+       	 			<p>I'm the collapsible content.</p>
+    			</div>
+				<div data-role="collapsible" >
+        			<h3>Wifi</h3>
+        			<p>I'm the collapsible content.</p>
+    			</div>
+				</div>
+	         </div><!-- /content -->
 
-	<header>
-		<button class="back" onclick="history.back()">
-			<img src="ui/images/arrow-left.svg" />
-		</button>
+	         <div data-theme="c" data-role="footer" data-position="fixed">
+                    <div data-role="navbar">
+                          <ul>
+    				          <li><a href="#index" data-icon="home"   data-transition="slide" data-direction="reverse">Home</a></li>
+					          <li><a href="#setting" data-icon="gear" class="ui-btn-active ui-state-persist" >Setting</a></li>
+                          </ul>
+                    </div><!-- /navbar -->
+             </div><!-- /footer-->
+        </div>
+  
 
-		<img class="logotype" src="ui/images/logo.svg" alt="Evothings" />
 
-		<button id="menu-button" tabindex="0" onclick="this.focus()">
-			<img src="ui/images/menu.svg" />
-		</button>
 
-		<menu>
-			<menuitem>
-				<a href="#">Home</a>
-			</menuitem>
 
-			<menuitem>
-				<a href="#troubleshooting">Troubleshooting</a>
-			</menuitem>
-		</menu>
-	</header>
 
-	<h1>BLE Scan</h1>
-
-	<button onclick="app.ui.onStartScanButton()" class="green">
-		START SCAN
-	</button>
-
-	<button onclick="app.ui.onStopScanButton()" class="charcoal">
-		STOP SCAN
-	</button>
-
-	<p id="scan-status">Scanning Paused</p>
-
-	<ul id="found-devices" class="dynamic"></ul>
-
-	<section id='troubleshooting'>
-
-		<h2>Troubleshooting</h2>
-
-		<p>Sometimes BLE stops working when switching between apps or doing multiple reloads. In this case restart the Evothings Client app. Additionally, you can use the Evothings Workbench Tools to see any error messages that may help in your investigation.</p>
-
-	</section>
 
 </body>
-
 </html>

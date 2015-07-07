@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns		= "http://www.w3.org/ns/widgets"
+	xmlns:gap	= "http://phonegap.com/ns/1.0"
+	id		= "com.you.www"
+	version 	= "1.0.0">
+
+	<name>BluetoothTest</name>
+
+	<description>
+		A bluetooth applcation with Evothing.
+	</description>
+
+	<author href="build.phonegap.com"
+		email="">
+		Mr. Mobile BLE
+	</author>
+
+	<icon src="icon.png" gap:role="default" />
+
+	<feature name="http://api.phonegap.com/1.0/network"/>
+
+	<preference name="orientation" value="portrait" />
+	<gap:plugin name="BluetoothPlugin" value="com.phonegap.plugin.bluetooth.BluetoothPlugin" />
+</widget>

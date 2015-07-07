@@ -20,5 +20,5 @@
 	<feature name="http://api.phonegap.com/1.0/network"/>
 
 	<preference name="orientation" value="portrait" />
-	<gap:plugin name="BluetoothPlugin" value="com.phonegap.plugin.bluetooth.BluetoothPlugin" />
+	<gap:plugin name="com.phonegap.plugin.bluetooth.BluetoothPlugin" />
 </widget>

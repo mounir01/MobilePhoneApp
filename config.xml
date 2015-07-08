@@ -4,10 +4,10 @@
 	id		= "com.you.www"
 	version 	= "1.0.0">
 
-	<name>BluetoothTest</name>
+	<name>BLETest</name>
 
 	<description>
-		A bluetooth applcation with Evothing.
+		A BLE applcation with BCSphere.
 	</description>
 
 	<author href="build.phonegap.com"
@@ -20,5 +20,5 @@
 	<feature name="http://api.phonegap.com/1.0/network"/>
 
 	<preference name="orientation" value="portrait" />
-	<gap:plugin name="com.phonegap.plugin.bluetooth.BluetoothPlugin" />
+	<gap:plugin name="org.bcsphere.bluetooth" version="0.5.1" />
 </widget>

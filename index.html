@@ -1,235 +1,30 @@
-<!doctype html>
-<html lang="en" ng-app="apps">
-<head>
-  <meta charset="utf-8">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="mobile-web-app-capable" content="yes">
-  <title>serialBluetooth</title>  
-  
-  <link rel="stylesheet" href="lib/onsen/css/onsenui.css">  
-  <link rel="stylesheet" href="lib/onsen/css/onsen-css-components.css">  
-  <link rel="stylesheet" href="styles/app.css"/>
-
-  <script type="text/javascript" src="cordova.js"></script>
-  <script src="lib/onsen/js/angular/angular.js"></script>    
-  <script src="lib/onsen/js/onsenui.js"></script>    
-
-  
-  <script type="text/javascript" src="js/underscore.js"></script>
-  <script type="text/javascript" src="js/bluetoothapi.js"></script>
-  <script type="text/javascript" src="js/bc.js"></script>
-  <script type="text/javascript" src="js/com.dialog-semiconductor/serial_port_service.js"></script>
-  <script type="text/javascript" src="js/com.dialog-semiconductor/serial_port_profile.js"></script>
-  <script type="text/javascript" src="js/index.js"></script>
- 
- 
-  
-  <script>
-    var apps = angular.module('apps',[
-      'onsen',
-      'phoneListCtrls',
-    ]);
-
-    var phoneListCtrls = angular.module('phoneListCtrls', []);
-
-    phoneListCtrls.controller('phoneListCtrl', ["$scope", '$location', '$http',
-        function($scope, $location, $http) {
-          $scope.app=app; 
-          app.initialize();
-        }
-    ]);
-  </script>
-
-</head>
-
-<body ng-controller="phoneListCtrl">    
-
-  <ons-sliding-menu
-    menu-page="menu.html" main-page="console.html" side="left"
-    var="menu" type="reveal" max-slide-distance="260px" swipable="true">
-  </ons-sliding-menu>
-   <!--****************************************menu.html****************************************************************--> 
-  <ons-template id="menu.html">
-    <ons-page modifier="menu-page" >
-      <ons-toolbar modifier="transparent"></ons-toolbar>
-
-      <ons-list class="menu-list">
-
-        <ons-list-item class="menu-item" ng-click="menu.setMainPage('console.html', {closeMenu: true})" onclick="app.consoleShow()">
-          <ons-icon icon="fa-twitter"></ons-icon>
-          Console 
-        </ons-list-item>
-        
-        <ons-list-item class="menu-item" ng-click="menu.setMainPage('basic.html', {closeMenu: true})">
-          <ons-icon icon="fa-home"></ons-icon>
-          Receive&Send
-        </ons-list-item>
-       
-      </ons-list>
-
-      <br>
-      <ons-list class="bottom-menu-list">
-      
-        <ons-list-item class="bottom-menu-item" ng-click="menu.setMainPage('set.html', {closeMenu: true})">
-          Settings
-        </ons-list-item>
-
-      </ons-list>
-    </ons-page>
-  </ons-template>
-
-
-  
-
-<!--****************************************rcv snd****************************************************************-->
-  <ons-template id="basic.html">
-    <ons-page >
-
-      <ons-toolbar>
-        <div class="left">
-          <ons-toolbar-button ng-click="menu.toggle()">
-            <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
-          </ons-toolbar-button>
-        </div>
-
-        <div class="center">Receive&Send</div>
-      </ons-toolbar>
-           
-      <ons-list-header>Receive Data</ons-list-header>
-      <ons-list modifier="inset" style="margin-top: 10px">
-        <ons-list-item>
-          <textarea id="rcv_Data" readonly="readonly" class="textarea textarea--transparent" placeholder="receive data" style="width: 100%; height: 150px;"></textarea>
-        </ons-list-item>
-      
-        <ons-list-item class="to-wrapper">
-          <ons-row>
-            <ons-col>
-              <div class="to-name">ReadX:</div>
-            </ons-col>
-            <ons-col>
-              <div class="to-name" id="rcv_Count">0</div>
-            </ons-col>
-          </ons-row>
-        </ons-list-item>
-      </ons-list>
-
-      <ons-list-header>Send Data</ons-list-header>
-      <ons-list modifier="inset" style="margin-top: 10px">
-        <ons-list-item>
-          <textarea id="snd_Data" class="textarea textarea--transparent" placeholder="please input" style="width: 100%; height: 50px;"></textarea>
-        </ons-list-item>
-
-        <ons-list-item class="to-wrapper">
-          <ons-row>
-            
-            <ons-col>
-              <div class="to-name">WriteX:</div>
-            </ons-col>
-            <ons-col>
-              <div class="to-name" id="snd_Count">0</div>
-            </ons-col>
-          </ons-row>
-        </ons-list-item>
-      </ons-list>
-
-      <ons-row>
-      <ons-col width="150px">
-      <div style="padding: 10px 9px" ng-click="app.onClearData()">
-        <ons-button modifier="large" style="margin: 0 auto;">
-          Clear
-        </ons-button>
-      </div>
-      </ons-col>
-      <ons-col width="150px">
-      <div  style="padding: 10px 9px" ng-click="app.sendSwitch()">
-        <ons-button modifier="large" style="margin: 0 auto;" id="sendSwitch">
-          Send
-        </ons-button>
-      </div>
-      </ons-col>      
-      </ons-row>
-    </ons-page>
-  </ons-template>
-
-<!--****************************************console****************************************************************-->
-  <ons-template id="console.html">
-    <ons-page >
-      <ons-toolbar>
-        <div class="left">
-          <ons-toolbar-button ng-click="menu.toggle()">
-            <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
-          </ons-toolbar-button>
-        </div>
-        
-        <div class="center">console</div>
-      </ons-toolbar>
-
-      <ons-list-header>Device State:</ons-list-header>
-      <ons-row style="margin-top: 10px;">
-        <ons-col width="150px" align="center">
-          <div style="padding: 10px 9px" ng-click="app.deviceOpen()">
-            <ons-button modifier="large" style="margin: 0 auto;">
-              Connect
-            </ons-button>
-          </div>
-          </ons-col>
-
-          <ons-col width="150px" align="center">
-          <div style="padding: 10px 9px" ng-click="app.deviceClose()">
-            <ons-button modifier="large" style="margin: 0 auto;">
-              Disconnect
-            </ons-button>
-          </div>
-        </ons-col>
-      </ons-row>
-
-      <ons-list-header>Console Data</ons-list-header>
-      <ons-list modifier="inset" style="margin-top: 10px">
-        <ons-list-item>
-          <textarea id="console_Data" readonly="readonly" class="textarea textarea--transparent" placeholder="data" style="width: 100%; height: 300px;"></textarea>
-        </ons-list-item>
-      </ons-list>
-      
-      
-
-    </ons-page>
-  </ons-template>
-<!--****************************************setting****************************************************************-->
-  <ons-template id="set.html">
-    <ons-page >
-      <ons-toolbar>
-        <div class="left">
-          <ons-toolbar-button ng-click="menu.toggle()">
-            <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
-          </ons-toolbar-button>
-        </div>
-        <div class="center">Settings</div>
-      </ons-toolbar>
-
-      <ons-list-header>Receive Setting</ons-list-header>
-        <ons-list modifier="inset" class="settings-list">
-            <button class="button button--outline" style="width:100px" id="rcv_HEX" ng-click="app.rcv_hex()">HEX</button>
-            <button class="button button--outline" style="width:100px" id="rcv_ASCII" ng-click="app.rcv_asc()">ASCII</button>
-      </ons-list>
-
-      <ons-list-header>Send Setting</ons-list-header>
-          <ons-list modifier="inset" class="settings-list">
-            <button class="button button--outline" style="width:100px" id="snd_HEX" ng-click="app.snd_hex()">HEX</button>
-            <button class="button button--outline" style="width:100px" id="snd_ASCII" ng-click="app.snd_asc()">ASCII</button>
-      </ons-list>
-      
-      <ons-list-header>Cyclic Sending</ons-list-header>
-      <ons-list modifier="inset" class="settings-list">
-          <button class="button button--outline" style="width:100px" id="cyc_dis" ng-click="app.cyc_dis()">disable</button>
-          <button class="button button--outline" style="width:100px" id="cyc_100" ng-click="app.cyc_100()">100 ms</button>
-          <button class="button button--outline" style="width:100px" id="cyc_200" ng-click="app.cyc_200()">200 ms</button>
-          <button class="button button--outline" style="width:100px" id="cyc_500" ng-click="app.cyc_500()">500 ms</button>
-          <button class="button button--outline" style="width:100px" id="cyc_800" ng-click="app.cyc_800()">800 ms</button>
-          <button class="button button--outline" style="width:100px" id="cyc_103" ng-click="app.cyc_103()">1000ms</button>
-      </ons-list>
-
-    </ons-page>
-  </ons-template>
-
-</body>
+<!DOCTYPE html>
+<html manifest="offline.manifest">
+	<head>
+		<meta charset="utf-8">
+		
+		<title></title>
+		<link rel="stylesheet" href="css/jquery.mobile.min.css" />
+		<script type="text/javascript" charset="utf-8" src="js/jquery-1.7.1.min.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js/jquery.mobile.min.js"></script>
+		<script type="text/javascript" src="js/underscore.js"></script>
+		<script type="text/javascript" src="js/bluetoothapi.js"></script>
+		<script type="text/javascript" src="js/bc.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js/index.js"></script>
+		
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script>
+			$(function(){
+				app.initialize();
+			});
+			
+		</script>
+	</head>
+	<body>
+		<a id="connect" href="javascript:void(0)" onclick="app.connect()" data-role="button" style="clear:both; text-align:center;">Connect!</a>
+		<a id="write" href="javascript:void(0)" onclick="app.write()" data-role="button" style="clear:both; text-align:center;">Write!</a>
+		<a id="read" href="javascript:void(0)" onclick="app.read()" data-role="button" style="clear:both; text-align:center;">Read!</a>
+		<a id="subscribe" href="javascript:void(0)" onclick="app.subscribe()" data-role="button" style="clear:both; text-align:center;">Subscribe!</a>
+		<a id="unsubscribe" href="javascript:void(0)" onclick="app.unsubscribe()" data-role="button" style="clear:both; text-align:center;">Unsubscribe!</a>
+	</body>
 </html>

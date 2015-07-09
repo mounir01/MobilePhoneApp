@@ -32,9 +32,7 @@ btnEnableBT.onclick = function() {
 if(BC.bluetooth.isopen){
 }else{
 			if(API !== "ios"){
-                BC.Bluetooth.OpenBluetooth(function(){null,
-				function(r){printResult3(r)},
-				function(e){log(e)}
+                BC.Bluetooth.OpenBluetooth(function(){
                 });
             }else{                  
                 //alert("Please open your bluetooth first.");
@@ -51,10 +49,9 @@ var btnDisableBT = document.getElementById("disableBT");
 if(!BC.bluetooth.isopen){
 }else{
 			if(API !== "ios"){
-                BC.Bluetooth.closeBluetooth(function(){null,
-				function(r){printResult3(r)},
-				function(e){log(e)}
+                BC.Bluetooth.closeBluetooth(function(){
                 });
+				
             }else{                  
                 //alert("Please open your bluetooth first.");
             }

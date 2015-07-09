@@ -38,64 +38,46 @@ var app = {
 		var BC = window.BC = cordova.require("org.bcsphere.bcjs");
 	},
 	
-	onBCReady : function(){
-		app.device = new BC.Device({deviceAddress:"78:C5:E5:99:26:54",type:"BLE"});
-		app.device.addEventListener("deviceconnected",function(device){
-            alert("device:" + device.deviceAddress + "is connected successfully!");
-		});
-		app.device.addEventListener("devicedisconnected",function(device){
-            alert("device:" + device.deviceAddress + "is connected successfully!")
-		});
+	onBCReady: function() {
+        BC.bluetooth.addEventListener("bluetoothstatechange",app.onBluetoothStateChange);
+        BC.bluetooth.addEventListener("newdevice",app.addNewDevice);
+		if(!BC.bluetooth.isopen){
+			if(API !== "ios"){
+				BC.Bluetooth.OpenBluetooth(function(){
+				});
+			}else{					
+				//alert("Please open your bluetooth first.");
+			}
+		}
+    },
+    
+   	onBluetoothStateChange : function(){
+		if(BC.bluetooth.isopen){
+
+		}else{
+			if(API !== "ios"){
+                BC.Bluetooth.OpenBluetooth(function(){
+                });
+            }else{                  
+                //alert("Please open your bluetooth first.");
+            }
+		}
 	},
 	
 	connect : function(){
-		var device = app.device;
-		device.connect(function(){
-			device.discoverServices(function(){
-				app.service = device.getServiceByUUID("fff0")[0];
-				app.service.discoverCharacteristics(function(){
-					app.characteristic1 = app.service.getCharacteristicByUUID("fff1")[0];
-					app.characteristic2 = app.service.getCharacteristicByUUID("fff4")[0];
-				},function(){
-					alert("discoverCharacteristics error!");
-				});
-			},function(){
-				alert("discoverServices error!");
-			});
-		},function(){
-			alert("connnect error!");
-		});		
+		if(BC.bluetooth.isopen){
+
+		}else{
+			if(API !== "ios"){
+                BC.Bluetooth.OpenBluetooth(function(){
+                });
+            }else{                  
+                //alert("Please open your bluetooth first.");
+            }
+		}	
 	},
 	
-	write : function(){
-		app.characteristic1.write("Hex","01",function(data){
-			alert(JSON.stringify(data));
-		},function(){
-			alert("write error!");
-		});
-	},
 	
-	read : function(){
-		app.characteristic1.read(function(data){
-			alert(JSON.stringify(data));
-		},function(){
-			alert("read error!");
-		});
-	},
-	
-	subscribe : function(){
-		app.characteristic2.subscribe(function(data){
-			alert(JSON.stringify(data));
-		});
-	},
-	
-	unsubscribe : function(){
-		app.characteristic2.unsubscribe(function(){
-			alert("unsubscribe success");
-		},function(){
-			alert("unsubscribe error!");
-		});
-	},
 };
 
 

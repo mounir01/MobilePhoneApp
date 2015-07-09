@@ -1,27 +1,98 @@
-<!DOCTYPE html>
-<html manifest="offline.manifest">
-	<head>
-		<meta charset="utf-8">
-		
-		<title></title>
-		<link rel="stylesheet" href="css/jquery.mobile.min.css" />
-		<script type="text/javascript" charset="utf-8" src="js/jquery-1.7.1.min.js"></script>
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>PhoneGap</title>
+<script type="text/javascript" charset="utf-8" src="phonegap-1.0.0.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/jquery-1.7.1.min.js"></script>
 		<script type="text/javascript" charset="utf-8" src="js/jquery.mobile.min.js"></script>
 		<script type="text/javascript" src="js/underscore.js"></script>
 		<script type="text/javascript" src="js/bluetoothapi.js"></script>
 		<script type="text/javascript" src="js/bc.js"></script>
-		<script type="text/javascript" charset="utf-8" src="js/index.js"></script>
-		<script type="text/javascript" charset="utf-8" src="phonegap-1.0.0.js"></script>
 		
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<script>
-			$(function(){
-				app.initialize();
-			});
-			
-		</script>
-	</head>
-	<body>
-		<a id="connect" href="javascript:void(0)" onclick="app.connect()" data-role="button" style="clear:both; text-align:center;">Connect!</a>
-	</body>
+
+
+<script type="text/javascript" charset="utf-8">
+
+
+function onBodyLoad()
+{
+    document.addEventListener("deviceready",onDeviceReady,false);
+}
+
+
+
+function onDeviceReady()
+{
+var BC = window.BC = cordova.require("org.bcsphere.bcjs");
+ 
+//------------------------------------------------------ enableBT example ------------------------------------------------------
+
+var btnEnableBT = document.getElementById("enableBT");
+btnEnableBT.onclick = function() {
+if(BC.bluetooth.isopen){
+}else{
+			if(API !== "ios"){
+                BC.Bluetooth.OpenBluetooth(function(){null,
+				function(r){printResult3(r)},
+				function(e){log(e)}
+                });
+            }else{                  
+                //alert("Please open your bluetooth first.");
+            }
+	}
+);
+}
+
+
+
+//------------------------------------------------------ disableBT example ------------------------------------------------------
+
+var btnDisableBT = document.getElementById("disableBT");
+if(!BC.bluetooth.isopen){
+}else{
+			if(API !== "ios"){
+                BC.Bluetooth.closeBluetooth(function(){null,
+				function(r){printResult3(r)},
+				function(e){log(e)}
+                });
+            }else{                  
+                //alert("Please open your bluetooth first.");
+            }
+	}
+);
+}
+
+//------------------------------------------------------ print results ------------------------------------------------------
+
+function printResult3(resultado){
+
+var htmlText="<ul><li>Bluetooth Enabled?: "+resultado+"</li></ul>";
+   document.getElementById("result").innerHTML=htmlText;
+}
+
+
+
+
+function printResult4(resultado){
+
+var htmlText="<ul><li>Bluetooth Disabled?: "+resultado+"</li></ul>";
+   document.getElementById("result").innerHTML=htmlText;
+}
+
+
+</script>
+</head>
+
+
+<body onload="onBodyLoad()">
+    <input id="enableBT" type="button" value="Enable Bluetooth" />
+    <input id="disableBT" type="button" value="Disable Bluetooth" />    
+    <hr>
+    
+    <div id="result"></div>
+    
+    <hr>
+
+    
+</body>
 </html>

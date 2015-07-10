@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<body>
+		<div class="header imgBack"> 
+			<img src="img/back.png" class="img-responsive" onclick="window.history.back();">
+			<h1><div id="deviceName"></div></h1>
+		</div>
+		
+		<div data-role='content' class="container" id="operate_char">
+			<div style="height:80px;"></div>
+			<div id="user_cont">
+				<ul class="device_info">
+					<li>Device Address: <span id="operate_char_deviceAddress"class="uuidSize"></span></li>
+					<li>Service Name: <span id="operate_service_name"></span></li>
+					<li>Service UUID: <span id="operate_service_uuid" class="uuidSize"></span></li>
+					<li>Characteristic Name: <span id="operate_char_name"></span></li>
+					<li>Characteristic UUID: <span id="operate_char_uuid"class="uuidSize"></span></li>
+				</ul>
+
+				<!-- descriptors view -->
+				<div class="operate_title">Descriptors</div>
+				<div id="des_list_view">
+					
+				</div>
+				<!-- clone -->
+				<ul id="des_tpl" style="display:none">
+			  		<li class="content">
+			  			<ul>
+							<li><b>UUID:</b><span dbField='uuid' class="uuidSize"></span></li>
+							<li><b>Name:</b><span dbField='name'></span></li>
+							<li><b>Value(HEX):</b><span dbField='value_hex'></span></li>
+							<li><b>Value(ASCII):</b><span dbField='value_ascii'></span></li>
+							<li><b>Value(Unicode):</b><span dbField='value_unicode'></span></li>
+							<li><b>Index:</b><span dbField='index'></span></li>
+						</ul>
+					</li>
+				</ul>
+				
+				<!-- read view -->
+				<div id="readView" style="display:none">
+					<div class="operate_title">Read</div>
+					<ul id="des_tpl">
+						<li><b>Read Value(Hex): </b><span id="readValue_hex"></span></li>
+						<li><b>Read Value(ASCII): </b><span id="readValue_ascii" ></span></li>
+						<li><b>Read Value(Unicode): </b><span id="readValue_unicode"></span></li>
+						<li><b>Read Date: </b><span id="readDate"></span></li>
+						<li><div id="readBtn" href="javascript:void(0)" style="">Read Characteristic</div></li>
+					</ul>
+				</div>
+
+				<!-- write view -->
+				<div id="writeView" data-role="fieldcontain" style="display:none">
+					<div class="operate_title">Write</div>
+					<div class="btnCenter">
+						<div class="btnAfter">Hex</div>
+						<div class="writeBtn">ASCII</div>
+						<div class="writeBtn">Unicode</div>
+					</div>
+					<textarea cols="40" rows="6" name="textarea" id="writeValue"></textarea>
+					<div id="writeOK" style="float:right">Write</div>
+				</div>
+				
+				<!-- notify view -->
+				<div id="notifyView" style="display:none">
+					<div class="operate_title">Notify</div>
+					<ul id="des_tpl">
+						<li><b>Notify Value(Hex): </b><span id="notifyValue_hex"></span></li>
+						<li><b>Notify Value(ASCII): </b><span id="notifyValue_ascii" ></span></li>
+						<li><b>Notify Value(Unicode): </b><span id="notifyValue_unicode"></span></li>
+						<li><b>Notify Date: </b><span id="notifyDate"></span></li>
+					</ul>
+					<div class="btnCenter">
+						<div id="subscribe">Subscribe</div>
+						<div id="unsubscribe">Unsubscribe</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		<script>
+			$(function(){
+				$(".btnCenter div").click(function(){
+					$(this).attr('class','btnAfter').siblings('div').attr('class','writeBtn');
+				});
+				//alert($(".btnCenter .btnAfter").html());
+				app.operateCharViewInit();
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<body>
+		<div class="header imgBack"> 
+			<img src="img/back.png" class="img-responsive" onclick="window.history.back();">
+			<h1><div id="deviceName"></div></h1>
+		</div>
+		
+		<div id="connect_panel" class="container">
+			<div style="height:80px;"></div>
+			<div class="desc">
+				<p>Device Address: <span id="deviceAddress"></span></p>
+			</div>
+			<div id="user_cont">
+				<div class="btn">
+					<div id="connect">Connect</div>
+				</div>
+			</div>
+		</div>
+		
+		<div id="disconnect_panel" class="container" style="display:none;">
+
+				<div style="height:80px;"></div>
+	
+				<div class="desc">
+					<p>Device Address: <span id="service_deviceAddress"></span></p>
+				</div>		
+				<div class="btn">
+					<div style="float:left;width:40%;font-size:0px;" onclick="app.disconnectDevice()">
+                        <img src="img/disconnect.png" style="display:block;margin:0px;border:0px;width:100%;"  />
+                       
+                    </div>
+                    
+					<div style="float:right;width:40%;font-size:0px;" onclick="app.createPair()">
+                       <img src="img/pair.png" style = "display:block;text-align:center; width:100%;">
+                    </div>
+				</div>
+				<div class="rssi">
+					<p>RSSI: <span id="deviceRSSI"></span></p>
+				</div>
+
+				<div id="service_view" class="row"></div>
+				
+				<div style="display:none">
+					<ul id="service_tpl" style="overflow:hidden;">
+				  		<li class="dots"><div class="dot"></div></li>
+				  		<li class="content">
+							<ul>
+								<li><h3 dbField='name'>Mokai</h3><li>
+								<li>Index: <span dbField='index'></span></li>
+								<li>UUID: <span dbField='uuid' class="uuidSize">902897712-1292716-129128</span></li>
+							</ul>
+						</li>
+				  		<li class="prev">
+							<img src="img/prev.png" class="img-responsive" >
+						</li>
+					</ul>
+				</div>
+		</div>
+		<script>
+			$(function(){
+				$("#service_refresh").bind("click",function(){
+					app.fillServices();
+				});
+				app.deviceViewInit();
+			});
+		</script>
+	</body>
+</html>

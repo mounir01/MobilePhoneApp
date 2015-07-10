@@ -1,95 +1,99 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-<head>
-<title>PhoneGap</title>
-<script type="text/javascript" charset="utf-8" src="phonegap-1.0.0.js"></script>
-<script type="text/javascript" charset="utf-8" src="js/jquery-1.7.1.min.js"></script>
-		<script type="text/javascript" charset="utf-8" src="js/jquery.mobile.min.js"></script>
-		<script type="text/javascript" src="js/underscore.js"></script>
-		<script type="text/javascript" src="js/bluetoothapi.js"></script>
-		<script type="text/javascript" src="js/bc.js"></script>
+	<head>
+		<meta charset="utf-8">
 		
-
-
-<script type="text/javascript" charset="utf-8">
-
-
-function onBodyLoad()
-{
-    document.addEventListener("deviceready",onDeviceReady,false);
-}
-
-
-
-function onDeviceReady()
-{
-var BC = window.BC = cordova.require("org.bcsphere.bcjs");
- 
-//------------------------------------------------------ enableBT example ------------------------------------------------------
-
-var btnEnableBT = document.getElementById("enableBT");
-btnEnableBT.onclick = function() {
-if(BC.bluetooth.isopen){
-}else{
-			if(API !== "ios"){
-                BC.Bluetooth.OpenBluetooth(function(){
-                });
-            }else{                  
-                //alert("Please open your bluetooth first.");
-            }
-	}
-);
-}
-
-
-
-//------------------------------------------------------ disableBT example ------------------------------------------------------
-
-var btnDisableBT = document.getElementById("disableBT");
-if(!BC.bluetooth.isopen){
-}else{
-			if(API !== "ios"){
-                BC.Bluetooth.closeBluetooth(function(){
-                });
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/reset.css"/>
+		<link rel="stylesheet" href="css/bootstrap.css" />
+		<link rel="stylesheet" type="text/css" href="css/bcstyle.css"/>
+		<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.2.css"/>
+		<script src="js/jquery-1.7.1.min.js"></script>
+		<script src="js/bootstrap.js"></script>
+		<script src="js/jquery.mobile.min.js"></script>
+		<script src="cordova.js"></script>
+		<script type="text/javascript" charset="utf-8" src="underscore.js"></script>
+		<script src="bc.js"></script>
+		<script src="underscore.js"></script>
+		<script src="js/index.js"></script>
+		
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+			
+		<script>
+			window.onload = function(){
+				var spinner = document.getElementById("spinner").clientHeight;
+				sessionStorage.setItem("spinnerHeight",spinner);
+				//$('#word').css('margin-top',-(spinner));
+				$('#word').remove();
+			}
+		
+			$(function(){
+				width = $(window).width();
+				height = $(window).height();
+				if(width*(0.5) > 320){
+					$('#logo').css('left',width*(0.5)-320);
+				}else{
+					$('#logo').css('left',0);
+				}
+				$('#bcbutton').css('bottom',height*(0.25));
+				setTimeout(function(){
+					$('#logo').css('display','none');
+					$('#bcbutton').fadeIn(3000);
+				},1500);
 				
-            }else{                  
-                //alert("Please open your bluetooth first.");
-            }
-	}
-);
-}
+				app.initialize();
+				
+				          
+                $("#client").click(function(){
+                   $("#client").css({"background":"rgb(227,125,30)"});
+                   $("#Service").css({"background":"none"});
+                   $.mobile.changePage("searched.html","slideup");
+                });
+              
+                $("#Service").click(function(){
+                   $("#Service").css({"background":"rgb(227,125,30)"});
+                   $("#client").css({"background":"none"});
+                   $.mobile.changePage("createService.html","slideup");
+                 });
+              });
+              </script>
+        </head>
+	<body>
 
-//------------------------------------------------------ print results ------------------------------------------------------
+	
+		<style type="text/css">
 
-function printResult3(resultado){
-
-var htmlText="<ul><li>Bluetooth Enabled?: "+resultado+"</li></ul>";
-   document.getElementById("result").innerHTML=htmlText;
-}
-
-
-
-
-function printResult4(resultado){
-
-var htmlText="<ul><li>Bluetooth Disabled?: "+resultado+"</li></ul>";
-   document.getElementById("result").innerHTML=htmlText;
-}
-
-
-</script>
-</head>
-
-
-<body onload="onBodyLoad()">
-    <input id="enableBT" type="button" value="Enable Bluetooth" />
-    <input id="disableBT" type="button" value="Disable Bluetooth" />    
-    <hr>
-    
-    <div id="result"></div>
-    
-    <hr>
-
-    
-</body>
+			#word{
+				position: relative;
+			}
+			
+			.word{
+				z-index:-999;
+			}
+			
+			img{
+				display:block;
+			}
+			
+		</style>
+        
+           <div class="container">
+			  <div id="word" class="searched word">
+				<img id="spinner" src="img/word1.png" class="img-responsive spinner">
+			  </div>
+            
+			<div class="container">
+				<img src="img/indexBg.png" class="img-responsive"/>
+				<div id="logo"><img src="img/logo.png" class="img-responsive"/></div>
+				<div id="bcbutton" style="float:left; display:none;width:94%;">
+					<div  id="client" style="float:left;background-color: rgb(227,125,30);width:42%;font-size:0px;">
+                        <img style="display:block;margin:0px;border:0px;width:100%;" src="img/client.png">
+                    </div>
+					<div id="Service" style="float:right;width:42%;margin-right:11%;font-size:0px;">
+                        <img style="display:block;margin:0px;border:0px;width:100%;" src="img/service.png">
+				</div>
+			</div>
+			
+		</div>
+	</body>
 </html>

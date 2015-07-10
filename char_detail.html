@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<body>
+		<div class="header imgBack"> 
+			<img src="img/back.png" class="img-responsive" onclick="window.history.back();">
+			<h1><div id="char_deviceName"></div></h1>
+		</div>
+		<div data-role ="content" id="content_page" class="container">
+			<div style="height:80px;"></div>
+			
+				<div class="device_info" style="border-buttom:1px solid rgb();">
+					<ul>
+					<li>Device Address: <span id="char_deviceAddress" class="uuidSize"></span></li>
+					<li>Service Name: <span id="service_name"></span></li>
+					<li>Service UUID: <span id="service_uuid" class="uuidSize"></span></li>
+					</ul>
+				</div>
+				
+				<div id="char_view" class="data_view">
+				</div> 
+				
+				<div style="display:none">
+				<ul id="char_tpl" style="overflow:hidden;">
+			  		<li class="dots"><div class="dot"></div></li>
+			  		<li class="content">
+						<ul onclick="app.next_page('aaaa','bbbb','cccc')">
+							<li><h3 dbField='name'>Mokai</h3></li>
+							<li>Index: <span dbField='index'></span></li>
+							<li>Property: <span dbField='property'></span></li>
+							<li>UUID: <span dbField='uuid'class="uuidSize">902897712-1292716-129128</span></li>							
+						</ul>
+					</li>
+					<li class="prev">
+						<img src="img/prev.png" class="img-responsive" >
+					</li>
+				</ul>
+			</div>
+		</div>
+		<script>
+			$(function(){
+				app.charViewInit();
+			});
+		</script>
+	</body>
+</html>

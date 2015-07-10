@@ -17,8 +17,9 @@
 
 	<icon src="icon.png" gap:role="default" />
 
-	<feature name="http://api.phonegap.com/1.0/network"/>
-
-	<preference name="orientation" value="portrait" />
+	<content src="index.html" />
+    <access origin="*" />
+    <preference name="fullscreen" value="true" />
+    <preference name="webviewbounce" value="true" />
 	<gap:plugin name="org.bcsphere.bluetooth" version="0.5.1" />
 </widget>

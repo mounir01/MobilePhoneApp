@@ -1,99 +1,130 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		
-		<title></title>
-		<link rel="stylesheet" type="text/css" href="css/reset.css"/>
-		<link rel="stylesheet" href="css/bootstrap.css" />
-		<link rel="stylesheet" type="text/css" href="css/bcstyle.css"/>
-		<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.2.css"/>
-		<script src="js/jquery-1.7.1.min.js"></script>
-		<script src="js/bootstrap.js"></script>
-		<script src="js/jquery.mobile.min.js"></script>
-		<script src="cordova.js"></script>
-		<script type="text/javascript" charset="utf-8" src="underscore.js"></script>
-		<script src="bc.js"></script>
-		<script src="underscore.js"></script>
-		<script src="js/index.js"></script>
-		
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-			
-		<script>
-			window.onload = function(){
-				var spinner = document.getElementById("spinner").clientHeight;
-				sessionStorage.setItem("spinnerHeight",spinner);
-				//$('#word').css('margin-top',-(spinner));
-				$('#word').remove();
-			}
-		
-			$(function(){
-				width = $(window).width();
-				height = $(window).height();
-				if(width*(0.5) > 320){
-					$('#logo').css('left',width*(0.5)-320);
-				}else{
-					$('#logo').css('left',0);
-				}
-				$('#bcbutton').css('bottom',height*(0.25));
-				setTimeout(function(){
-					$('#logo').css('display','none');
-					$('#bcbutton').fadeIn(3000);
-				},1500);
-				
-				app.initialize();
-				
-				          
-                $("#client").click(function(){
-                   $("#client").css({"background":"rgb(227,125,30)"});
-                   $("#Service").css({"background":"none"});
-                   $.mobile.changePage("searched.html","slideup");
-                });
-              
-                $("#Service").click(function(){
-                   $("#Service").css({"background":"rgb(227,125,30)"});
-                   $("#client").css({"background":"none"});
-                   $.mobile.changePage("createService.html","slideup");
-                 });
-              });
-              </script>
-        </head>
-	<body>
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <title>Kendo UI DataViz</title>
+    
+    <link href="kendo/styles/kendo.dataviz.mobile.min.css" rel="stylesheet" />
 
-	
-		<style type="text/css">
+    <!-- Once the final theme is chosen the redundant css reference should removed -->
+    <link href="kendo/styles/kendo.dataviz.flat.min.css" rel="stylesheet" />
+    <link href="kendo/styles/kendo.dataviz.silver.min.css" rel="stylesheet" />
 
-			#word{
-				position: relative;
-			}
-			
-			.word{
-				z-index:-999;
-			}
-			
-			img{
-				display:block;
-			}
-			
-		</style>
-        
-           <div class="container">
-			  <div id="word" class="searched word">
-				<img id="spinner" src="img/word1.png" class="img-responsive spinner">
-			  </div>
-            
-			<div class="container">
-				<img src="img/indexBg.png" class="img-responsive"/>
-				<div id="logo"><img src="img/logo.png" class="img-responsive"/></div>
-				<div id="bcbutton" style="float:left; display:none;width:94%;">
-					<div  id="client" style="float:left;background-color: rgb(227,125,30);width:42%;font-size:0px;">
-                        <img style="display:block;margin:0px;border:0px;width:100%;" src="img/client.png">
-                    </div>
-					<div id="Service" style="float:right;width:42%;margin-right:11%;font-size:0px;">
-                        <img style="display:block;margin:0px;border:0px;width:100%;" src="img/service.png">
-				</div>
-			</div>
-			
+    <link href="styles/main.css" rel="stylesheet" />
+	<link href="styles/graph.css" rel="stylesheet" />
+    
+</head>
+
+<body>
+    <!-- Home View -->
+    <div id="home"
+        data-role="view"
+        data-title="Home"
+        data-stretch="true">
+	    <div class="graph-container">
+			<div id="placeholder" class="graph-placeholder" data-position="absolute"></div>
 		</div>
-	</body>
+    </div>
+
+    <!-- Settings View -->
+    <div id="settings"
+        data-role="view"
+        data-title="Settings"
+		data-show="changeSetting">
+		<ul id="select-option">
+                        <li >
+                            Bluetooth
+                        </li>
+                        <li>
+                            Wifi
+                        </li>
+		</ul>
+		<ul id="bleutoothSettings" data-role="listview" data-style="inset" >
+                        <li class="km-group-container">
+						<div class="km-group-title">
+						   <div class="km-text">
+                              Bluetooth Settings
+                           </div>
+						</div>
+							<ul class="km-list">
+                                <li>State 
+									<input type="checkbox" class="switch" id="onOffBluetooth" data-role="switch" data-off-label="Off" data-on-label="On" data-enable="false" data-change="onChange"/>
+								</li>
+                                <li>Devices Scan								
+									<a id="btnBtDiscover" data-role="button" style="float: right;" data-animated="true" data-icon="search" data-align="right" data-enable="false" class="km-primary">Scan</a>
+								</li>
+                            </ul>
+							<ul id="devices" class="km-list"></ul> 
+									<ul id="message">Hello.</ul>
+
+                        </li>
+		</ul>
+		<ul data-role="listview" data-style="inset" style="display:none">
+                <li class="km-group-container">
+						    <div class="km-group-title">
+							    <div class="km-text">
+								Wifi Settings
+								</div>
+							</div>
+			        <ul class="km-list">
+                                <li>State 
+									<input type="checkbox" class="switch" id="onOffNet" />
+								</li>
+                                <li>Networks Scan  
+									<a data-role="button" style="float: right;" data-animated="true" data-icon="search" data-align="right" class="km-primary">Scan</a>
+								</li>                    
+					</ul>
+                </li>
+		</ul>		
+    </div>
+
+    
+
+    <!--Layout-->
+    <div data-role="layout" data-id="mobile-tabstrip">
+        <!--Header-->
+        <div data-role="header">
+            <div data-role="navbar">
+                <span data-role="view-title"></span>
+                <!--<a data-align="right" data-role="button" data-click="app.changeSkin">Flat</a>-->
+            </div>
+        </div>
+
+        <!--Footer-->
+        <div data-role="footer">
+            <div id="footButtons"  data-role="tabstrip" data-select="onSelect"><!--  -->
+                <a id="tab1" href="#/" data-icon="home">Home</a>
+                <a id="tab2" href="#settings" data-icon="settings">Settings</a>
+            </div>
+        </div>
+    </div>
+	
+
+    <script src="kendo/js/jquery.min.js"></script>
+	<script src="scripts/underscore.js"></script>
+	<script src="scripts/backbone.js"></script>
+	<script type="text/javascript" src="scripts/waypoints.min.js"></script>
+    <script type="text/javascript" src="scripts/jquery.timeago.js"></script>
+	<script src="kendo/js/kendo.dataviz.mobile.min.js"></script>	
+	<script src="scripts/jquery.flot.js"></script>
+	<script type="text/javascript" src="scripts/fastclick.js"></script>
+	<script src="cordova.js"></script>
+	<script src="scripts/app.js"></script>
+
+    
+	<script type="text/html" id="deviceTemplate">
+		<% if(isConnected) { %>
+		<a data-role="button" style='float: right;' class="btn-bt-disconnect km-primary km-button-right km-icon-button"><span class="km-icon km-stop"></span></a>
+		<% } else { %>
+		<a data-role="button" style='float: right;' class="btn-bt-connect km-primary km-button-right km-icon-button"><span class="km-icon km-details"></span></a>
+		 <% } %>
+		<h4 class="km-bold"><%= name %></h4>
+		<p class="job-title"><%= address %></p>
+		
+	</script>
+	
+</body>
 </html>

@@ -21,5 +21,5 @@
     <access origin="*" />
     <preference name="fullscreen" value="true" />
     <preference name="webviewbounce" value="true" />
-	<gap:plugin name="org.bcsphere.bluetooth" version="0.5.1" />
+	<gap:plugin name="com.megster.cordova.bluetoothserial" version="0.2.2" />
 </widget>
